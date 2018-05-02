@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
-
+import Expo from 'expo';
 
 import createStore from './src/createStore';
 import Main from './src';
@@ -14,9 +14,9 @@ export default class App extends React.Component {
 			<Provider
 				store={store}
 			>
-				<View>
+				<View style={{flex:1, marginTop: Expo.Constants.statusBarHeight}}>
 					<Main/>
-					<Text>poop /n sdfsd dsfasdf</Text>
+					
 				</View>
 			</Provider>
 		);
