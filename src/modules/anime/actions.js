@@ -1,10 +1,11 @@
 import { ADD } from './constants';
 
-export const addAnime = (name) => {
+export const addAnime = (name, description) => {
 	return {
 		type: ADD,
 		payload: {
-			name: name
+			name: name,
+			description: description
 		}
 	}
 };

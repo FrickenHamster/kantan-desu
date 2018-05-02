@@ -5,6 +5,9 @@ import Expo from 'expo';
 
 import createStore from './src/createStore';
 import Main from './src';
+import history from "./config/history";
+import { ConnectedRouter, push } from 'react-router-redux'
+
 
 const store = createStore();
 
@@ -14,16 +17,17 @@ export default class App extends React.Component {
 			<Provider
 				store={store}
 			>
-				<View style={{flex:1, marginTop: Expo.Constants.statusBarHeight}}>
-					<Main/>
-					
-				</View>
+				<ConnectedRouter history={history}>
+					<View style={{flex: 1, marginTop: Expo.Constants.statusBarHeight}}>
+						<Main/>
+
+					</View>
+				</ConnectedRouter>
 			</Provider>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
-	},
+	container: {},
 });

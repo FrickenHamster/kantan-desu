@@ -44,7 +44,11 @@ export default (state = initialState, action) => {
 		case ADD:
 			return {
 				...state,
-				animes: [...state.animes, action.payload.name]
+				animes: [...state.animes, {
+					id: state.animes.length, 
+					title: action.payload.name, 
+					description: action.payload.description}
+					]
 			};
 		default:
 			return state;

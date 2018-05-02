@@ -43,6 +43,7 @@ export default class AnimeList extends Component {
 					renderItem={this.renderItem}
 					keyExtractor={this.keyExtractor}
 					ItemSeparatorComponent={this.renderSeperator}
+					extraData={this.state}
 				/>
 			</View>
 		)
