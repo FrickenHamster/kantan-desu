@@ -1,28 +1,51 @@
 import React, { Component, PureComponent } from 'react';
+import { Feather } from '@expo/vector-icons'
 import {
 	FlatList,
 	View,
 	StyleSheet,
-	Text
+	Text,
+	TouchableOpacity
 }  from 'react-native';
 import PropTypes from 'prop-types';
 
+import {deleteAnime} from '../actions';
+
+
 class AnimeListItem extends PureComponent{
+	constructor(props){
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick(){
+		this.props.deleteFunc(this.props.id);
+	}
+
 	render() {
 		return (
 			<View style={styles.itemContainer}>
-				<Text style={styles.titleText}>{this.props.item}</Text>
+				<View>
+				<Text style={[styles.titleText, styles.textContainer]}>{this.props.item}</Text>
 				<Text style={styles.descriptionText}>{this.props.description}</Text>
+				</View>
+				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="purple" size={32}/></TouchableOpacity></View>
 			</View>
 		)
 	}
 }
 
 export default class AnimeList extends Component {
-	
+	constructor(props){
+		super(props);
+
+		this.renderItem = this.renderItem.bind(this);
+	}
 	renderItem(val) {
-		return (<AnimeListItem 
+		return (<AnimeListItem
+			deleteFunc={this.props.deleteFunc} 
 			item={val.item.title}
+			id={val.item.id}
 			description={val.item.description}
 		/>);
 	}
@@ -55,10 +78,17 @@ const styles = StyleSheet.create({
 	itemContainer: {
 		height: 80,
 		paddingHorizontal: 12,
-		justifyContent: 'center'
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	},
 	titleText: {
 		fontSize: 20
+	},
+	textContainer: {
+		justifyContent: 'flex-start'
+	},
+	buttonContainer:{
+		justifyContent: 'flex-end'
 	},
 	descriptionText: {
 		fontSize: 14
@@ -69,5 +99,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#8E8E8E',
 		marginHorizontal: 8
 	},
+	deleteButton:{
+		alignSelf: 'center',
+		justifyContent: 'flex-end'
+	}
 });
-

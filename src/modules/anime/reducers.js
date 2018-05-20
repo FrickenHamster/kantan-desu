@@ -1,4 +1,4 @@
-import { ADD } from './constants';
+import { ADD, DELETE } from './constants';
 
 const initialState = {
 	animes: [
@@ -49,6 +49,15 @@ export default (state = initialState, action) => {
 					title: action.payload.name, 
 					description: action.payload.description}
 					]
+			};
+		case DELETE:
+			console.log('deleting ', action.payload.id);
+			const newAnimeArray = state.animes.filter(item => {
+				return (item.id !== action.payload.id);
+			})
+			return{
+				...state,
+				animes: newAnimeArray
 			};
 		default:
 			return state;

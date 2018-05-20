@@ -7,9 +7,14 @@ import {
 import { connect } from 'react-redux';
 
 import AnimeList from '../components/AnimeList';
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
+
+import { deleteAnime } from '../actions';
 
 class AnimeMain extends Component {
+	constructor(props){
+		super(props);
+	}
 
 	render() {
 		console.log(this.props.animes);
@@ -18,6 +23,7 @@ class AnimeMain extends Component {
 				<Text style={{textAlign: 'center', fontSize: 20}}>Anime Backlog</Text>
 				<AnimeList
 					animes={this.props.animes}
+					deleteFunc={this.props.deleteAnime}
 				/>
 				<View
 					style={{
@@ -49,6 +55,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
 	gotoAddAnime: () => {
 		dispatch(push('/addanime'));
+	},
+	deleteAnime: (id) => {
+		dispatch(deleteAnime(id));
+		//handle with saga later
+		dispatch(push('/'));
 	}
 });
 

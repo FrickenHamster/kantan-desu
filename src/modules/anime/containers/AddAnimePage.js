@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 	addAnime: (name, description) => {
 		dispatch(addAnime(name, description));
 		//handle with saga later
-		dispatch(push('/'));
+		dispatch(push('/'))
 	}
 });
 
