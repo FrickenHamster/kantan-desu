@@ -9,24 +9,31 @@ import {
 }  from 'react-native';
 import PropTypes from 'prop-types';
 
-import {deleteAnime} from '../actions';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 
 class AnimeListItem extends PureComponent{
 	constructor(props){
 		super(props);
+
 		this.handleClick = this.handleClick.bind(this);
+		this.detailClick = this.detailClick.bind(this);
 	}
 
 	handleClick(){
 		this.props.deleteFunc(this.props.id);
 	}
 
+	detailClick(){
+		this.props.detailFunc(this.props.id);
+	}
+
 	render() {
 		return (
 			<View style={styles.itemContainer}>
 				<View>
-				<Text style={[styles.titleText, styles.textContainer]}>{this.props.item}</Text>
+				<Text style={[styles.titleText, styles.textContainer]} onPress={this.detailClick}>{this.props.item}</Text>
 				<Text style={styles.descriptionText}>{this.props.description}</Text>
 				</View>
 				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="purple" size={32}/></TouchableOpacity></View>
@@ -47,6 +54,7 @@ export default class AnimeList extends Component {
 			item={val.item.title}
 			id={val.item.id}
 			description={val.item.description}
+			detailFunc={this.props.detailFunc}
 		/>);
 	}
 	

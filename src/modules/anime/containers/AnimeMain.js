@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import {
 	Button,
 	View,
-	Text
+	Text,
+	StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -17,13 +18,14 @@ class AnimeMain extends Component {
 	}
 
 	render() {
-		console.log(this.props.animes);
 		return (
 			<View style={{flex: 1}}>
-				<Text style={{textAlign: 'center', fontSize: 20}}>Anime Backlog</Text>
+				<Text style={styles.title}>Anime Backlog</Text>
+				<Text>{"\n \n"}</Text>
 				<AnimeList
 					animes={this.props.animes}
 					deleteFunc={this.props.deleteAnime}
+					detailFunc={this.props.detailAnime}
 				/>
 				<View
 					style={{
@@ -46,6 +48,23 @@ class AnimeMain extends Component {
 
 }
 
+const styles = StyleSheet.create({
+	title: {
+		fontSize: 24,
+		textAlign: 'center',
+		backgroundColor: '#9d8189',
+		color: '#d8e2df',
+		position: 'absolute',
+		top: 0,
+		alignSelf: 'stretch',
+		right: 0,
+		left: 0
+	},
+	descrip: {
+		color: '#9d8189'
+	}
+});
+
 const mapStateToProps = (state) => {
 	return {
 		animes: state.anime.animes
@@ -60,6 +79,9 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(deleteAnime(id));
 		//handle with saga later
 		dispatch(push('/'));
+	},
+ 	detailAnime: (id) => {
+		dispatch(push(`/animedetail/${id}`)); 
 	}
 });
 
