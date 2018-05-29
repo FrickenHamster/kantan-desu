@@ -6,19 +6,34 @@ import {
 	Text,
 	Image
 } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
 
 class AnimeDetail extends Component {
 	constructor(props) {
 		super(props);
+
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	static contextTypes = {
+		router: () => true, // replace with PropTypes.object if you use them
+	}
+
+	handleClick(){
+		this.context.router.history.goBack();
 	}
 
 
 	render() {
+
 		return (
 			<View style={{flex: 1, backgroundColor: '#ffe5d9'}}>
-        	<Text style={styles.title}>{this.props.anime.title}</Text>
+        	<View>
+				<Text style={styles.title}>{this.props.anime.title}</Text>
+				<View><Feather name="chevron-left" color="purple" size={32} onPress={this.handleClick}/></View>
+			</View>
 			<Text>{"\n \n"}</Text>
 			<View style={styles.pic}><Image source={require('../imgs/usapi.jpg')}/></View>
 			<Text style={styles.descrip}>{this.props.anime.description}</Text>
