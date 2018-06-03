@@ -67,6 +67,7 @@ class AddAnimePage extends Component {
 						title={'Add Anime'}
 						onPress={this.handleSubmit}
 						style={{flex: 1}}
+						color='#938ec7'
 					/>
 				</View>
 			</View>)
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
 	},
 	formInput: {
 		fontSize: 18,
-		marginBottom: 8
+		marginBottom: 8,
+		color: '#2e2e2e'
 	},
 	buttonContainer: {
 		alignSelf: 'flex-end',

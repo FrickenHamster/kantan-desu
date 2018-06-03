@@ -21,7 +21,7 @@ class AnimeMain extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1}}>
+			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar title="Anime Backlog"/>
 				<AnimeList
 					animes={this.props.animes}
@@ -38,6 +38,7 @@ class AnimeMain extends Component {
 					<Button
 						title='Add Anime'
 						onPress={this.props.gotoAddAnime}
+						color='#938ec7'
 						style= {{
 						flex: 1
 					}}

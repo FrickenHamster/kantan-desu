@@ -20,7 +20,7 @@ class AnimeDetail extends Component {
 	render() {
 
 		return (
-			<View style={{flex: 1, backgroundColor: '#ffe5d9'}}>
+			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
         	<View>
 				<TopBar title={this.props.anime.title} />
 			</View>
@@ -32,9 +32,10 @@ class AnimeDetail extends Component {
 
 const styles = StyleSheet.create({
 	descrip: {
-		color: '#9d8189',
+		color: '#2e2e2e',
 		paddingLeft: 10,
-		paddingRight: 10
+		paddingRight: 10,
+		fontSize: 20
 	},
 	pic: {
 		maxHeight: 700, 
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
 		margin: 'auto',
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingBottom: 20
+		paddingBottom: 20,
+		marginTop: 20
 	}
 });
 
