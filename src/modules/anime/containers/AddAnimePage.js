@@ -12,6 +12,8 @@ import FormTextInput from '../components/FormTextInput';
 
 import { addAnime } from '../actions';
 
+import TopBar from '../components/TopBar';
+
 class AddAnimePage extends Component {
 	constructor(props) {
 		super(props);
@@ -38,8 +40,8 @@ class AddAnimePage extends Component {
 	render() {
 		return (
 			<View style={{flex: 1}}>
+				<TopBar title="Add Animu To Backlog"/>
 				<View style={styles.formContainer}>
-					<Text style={styles.title}>Add Animu To Backlog</Text>
 					<FormTextInput
 						name={'title'}
 						value={this.state.title}
@@ -83,14 +85,9 @@ export default connect(null, mapDispatchToProps)(AddAnimePage);
 
 
 const styles = StyleSheet.create({
-	title: {
-		fontSize: 24,
-		textAlign: 'center',
-		marginTop: 12,
-		marginBottom: 20
-	},
 	formContainer: {
 		padding: 10,
+		marginTop: 20
 	},
 	formInput: {
 		fontSize: 18,
