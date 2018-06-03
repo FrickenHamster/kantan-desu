@@ -12,6 +12,8 @@ import { push } from 'react-router-redux';
 
 import { deleteAnime } from '../actions';
 
+import TopBar from '../components/TopBar';
+
 class AnimeMain extends Component {
 	constructor(props){
 		super(props);
@@ -20,8 +22,7 @@ class AnimeMain extends Component {
 	render() {
 		return (
 			<View style={{flex: 1}}>
-				<Text style={styles.title}>Anime Backlog</Text>
-				<Text>{"\n \n"}</Text>
+				<TopBar title="Anime Backlog"/>
 				<AnimeList
 					animes={this.props.animes}
 					deleteFunc={this.props.deleteAnime}
@@ -49,17 +50,6 @@ class AnimeMain extends Component {
 }
 
 const styles = StyleSheet.create({
-	title: {
-		fontSize: 24,
-		textAlign: 'center',
-		backgroundColor: '#9d8189',
-		color: '#d8e2df',
-		position: 'absolute',
-		top: 0,
-		alignSelf: 'stretch',
-		right: 0,
-		left: 0
-	},
 	descrip: {
 		color: '#9d8189'
 	}
