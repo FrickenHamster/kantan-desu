@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import Card from '../shared/components/Card';
+
 
 class AnimeListItem extends PureComponent{
 	constructor(props){
@@ -31,13 +33,15 @@ class AnimeListItem extends PureComponent{
 
 	render() {
 		return (
+			<Card>
 			<View style={styles.itemContainer}>
-				<View>
+				<View>					
 				<Text style={[styles.titleText, styles.textContainer]} onPress={this.detailClick}>{this.props.item}</Text>
 				<Text style={styles.descriptionText}>{this.props.description}</Text>
 				</View>
 				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" size={32}/></TouchableOpacity></View>
 			</View>
+			</Card>
 		)
 	}
 }
@@ -85,6 +89,7 @@ export default class AnimeList extends Component {
 const styles = StyleSheet.create({
 	itemContainer: {
 		height: 80,
+		width: '100%',
 		paddingHorizontal: 12,
 		flexDirection: 'row',
 		justifyContent: 'space-between'
@@ -103,8 +108,7 @@ const styles = StyleSheet.create({
 	},
 	separator: {
 		flex: 1,
-		height: 1,
-		backgroundColor: '#8E8E8E',
+		height: 5,
 		marginHorizontal: 8
 	},
 	deleteButton:{

@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 
 import TopBar from '../components/TopBar';
 
+import Card from '../shared/components/Card';
+
 class AnimeDetail extends Component {
 	constructor(props) {
 		super(props);
@@ -25,7 +27,12 @@ class AnimeDetail extends Component {
 				<TopBar title={this.props.anime.title} />
 			</View>
 			<View style={styles.pic}><Image source={require('../imgs/usapi.jpg')}/></View>
-			<Text style={styles.descrip}>{this.props.anime.description}</Text>
+			<View style={styles.descripCard}>
+			<Card>
+				<Text style={styles.descrip}>{this.props.anime.description}</Text>
+			</Card>
+			</View>
+			
 			</View>)
 	}
 }
@@ -36,6 +43,12 @@ const styles = StyleSheet.create({
 		paddingLeft: 10,
 		paddingRight: 10,
 		fontSize: 20
+	},
+	descripCard:{
+		justifyContent: 'center',
+		marginLeft: 'auto',
+		marginRight: 'auto'
+
 	},
 	pic: {
 		maxHeight: 700, 
