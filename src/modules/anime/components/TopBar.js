@@ -31,7 +31,7 @@ export default class TopBar extends Component {
 		return (
         	<View>
 				<Text style={styles.title}>{this.props.title}</Text>
-				<View><Feather name="chevron-left" color="#c5c2e1" size={32} onPress={this.handleClick}/></View>
+				<View><Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleClick}/></View>
 			</View>
         )
 	}
@@ -41,12 +41,13 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 24,
 		textAlign: 'center',
-		backgroundColor: '#7c73e6',
-		color: '#c4c1e0',
+		backgroundColor: '#60DCE8',
+		color: '#fffafa',
 		position: 'absolute',
 		top: 0,
 		alignSelf: 'stretch',
 		right: 0,
-		left: 0
+		left: 0,
+		padding: 2
 	}
 });

@@ -39,7 +39,7 @@ class AnimeListItem extends PureComponent{
 				<Text style={[styles.titleText, styles.textContainer]} onPress={this.detailClick}>{this.props.item}</Text>
 				<Text style={styles.descriptionText}>{this.props.description}</Text>
 				</View>
-				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" size={32}/></TouchableOpacity></View>
+				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" backgroundColor="#D7776B" size={32}/></TouchableOpacity></View>
 			</View>
 			</Card>
 		)

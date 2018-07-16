@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-native';
 import AnimeMain from './modules/anime/containers/AnimeMain';
 import AddAnimePage from './modules/anime/containers/AddAnimePage';
 import AnimeDetail from './modules/anime/containers/AnimeDetail';
+import AnimeSearch from './modules/anime/containers/AnimeSearch';
 
 export default class Main extends Component {
 	render() {
@@ -13,6 +14,7 @@ export default class Main extends Component {
 					<Route exact path='/' component={AnimeMain}/>
 					<Route exact path='/addanime' component={AddAnimePage}/>
 					<Route exact path='/animedetail/:id' component={AnimeDetail}/>
+					<Route exact path='/animesearch' component={AnimeSearch}/>
 			</View>
 		)
 	}

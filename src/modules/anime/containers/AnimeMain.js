@@ -38,11 +38,20 @@ class AnimeMain extends Component {
 					<Button
 						title='Add Anime'
 						onPress={this.props.gotoAddAnime}
-						color='#938ec7'
+						color='#60DCE8'
 						style= {{
 						flex: 1
 					}}
 					/>
+					<Button
+						title='Anime Search'
+						onPress={this.props.searchAnime}
+						color='#0EC8EC'
+						style= {{
+						flex: 1
+					}}
+					/>
+
 				</View>
 			</View>
 		)
@@ -73,6 +82,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
  	detailAnime: (id) => {
 		dispatch(push(`/animedetail/${id}`)); 
+	},
+	searchAnime: (id) => {
+		dispatch(push('/animesearch'));
 	}
 });
 

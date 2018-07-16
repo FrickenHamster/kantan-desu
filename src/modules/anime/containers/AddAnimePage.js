@@ -67,7 +67,7 @@ class AddAnimePage extends Component {
 						title={'Add Anime'}
 						onPress={this.handleSubmit}
 						style={{flex: 1}}
-						color='#938ec7'
+						color='#60DCE8'
 					/>
 				</View>
 			</View>)
