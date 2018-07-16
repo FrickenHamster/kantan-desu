@@ -8,6 +8,7 @@ export default FormTextInput = ({value, onChangeText, name, ...props}) => (
 	<TextInput
 		value={value}
 		onChangeText={(value) => onChangeText(name, value)}
+		underlineColorAndroid= 'rgba(0,0,0,0)'
 		{...props}
 	/>
 )

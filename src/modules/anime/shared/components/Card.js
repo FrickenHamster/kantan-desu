@@ -13,7 +13,7 @@ export default class Card extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={[styles.container, this.props.style]}>
                 {this.props.children}
 			</View>)
 	}
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'baseline',
 		minWidth: 300,
 		padding: 10,
-		borderColor: '#2e2e2e',
+		borderColor: '#C1C0BC',
 		borderRadius: 5,
 		borderWidth: 0.5
 	},
