@@ -5,6 +5,7 @@ import anime from './modules/anime/index';
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import history from '../config/history';
 
+import thunk from 'redux-thunk';
 
 const middleware = routerMiddleware(history);
 
@@ -22,5 +23,9 @@ export default (state = initialState) => {
 		router: routerReducer
 	});
 
-	return createStore(rootReducer, applyMiddleware(middleware));
+	return createStore(rootReducer, 
+		applyMiddleware(
+			middleware, 
+			thunk
+		));
 }

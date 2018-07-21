@@ -10,13 +10,18 @@ import { connect } from 'react-redux';
 import AnimeList from '../components/AnimeList';
 import { push } from 'react-router-redux';
 
-import { deleteAnime } from '../actions';
+import { deleteAnime, searchAnime } from '../actions';
 
 import TopBar from '../components/TopBar';
 
 class AnimeMain extends Component {
 	constructor(props){
 		super(props);
+	}
+	
+	componentDidMount() {
+		this.props.testApi();
+
 	}
 
 	render() {
@@ -85,7 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	searchAnime: (id) => {
 		dispatch(push('/animesearch'));
-	}
+	},
+	testApi: () => dispatch(searchAnime('naruto'))
 });
 
 

@@ -1,4 +1,4 @@
-import { ADD, DELETE } from './constants';
+import { ADD, DELETE, SET_SEARCH_ANIME } from './constants';
 
 const initialState = {
 	animes: [
@@ -37,7 +37,8 @@ const initialState = {
 			title: 'Re: Zero',
 			description: 'isekai waifus'
 		}
-	]
+	],
+	searchAnimeList: []
 };
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -51,14 +52,21 @@ export default (state = initialState, action) => {
 					]
 			};
 		case DELETE:
-			console.log('deleting ', action.payload.id);
 			const newAnimeArray = state.animes.filter(item => {
 				return (item.id !== action.payload.id);
-			})
-			return{
+			});
+			return {
 				...state,
 				animes: newAnimeArray
 			};
+			
+		case SET_SEARCH_ANIME: {
+			return {
+				...state,
+				searchAnimeList: action.payload.animes
+			}
+		}
+			
 		default:
 			return state;
 	}
