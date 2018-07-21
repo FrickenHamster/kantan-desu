@@ -20,7 +20,6 @@ class AnimeMain extends Component {
 	}
 	
 	componentDidMount() {
-		this.props.testApi();
 
 	}
 
@@ -90,8 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	searchAnime: (id) => {
 		dispatch(push('/animesearch'));
-	},
-	testApi: () => dispatch(searchAnime('naruto'))
+	}
 });
 
 

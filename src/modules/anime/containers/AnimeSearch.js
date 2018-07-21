@@ -17,6 +17,8 @@ import TopBar from '../components/TopBar';
 
 import Card from '../shared/components/Card';
 
+import { searchAnime } from '../actions';
+
 class AnimeSearch extends Component {
 	constructor(props) {
 		super(props);
@@ -27,15 +29,19 @@ class AnimeSearch extends Component {
 
 		this.handleChangeText = this.handleChangeText.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this._search = this._search.bind(this);
 	}
 
 	handleChangeText(name, value) {
-		console.log(value);
 		this.setState({ title: value });
 	}
 
 	handleSubmit() {
 		console.log('submitting');
+	}
+
+	_search(){
+		this.props.searchApi(this.state.title);
 	}
 
 	render() {
@@ -54,7 +60,7 @@ class AnimeSearch extends Component {
 								placeholder='Title'
 								maxLength={100}
 							/>
-							<Feather name="search" size={20} style={styles.searchIcon} />
+							<Feather name="search" size={20} style={styles.searchIcon} onPress={this._search} />
 						</View>
 					</Card>
 				</View>
@@ -67,12 +73,11 @@ class AnimeSearch extends Component {
 					/>
 				</View>
 				<View style={styles.results}>
-					<ScrollView>
-						<Result img={require('../imgs/pancake.jpg')} name='Toradora' description='Guy gets blackmailed into making breakfast for loli then obtains tsundere waifu' />
-						<Result img={require('../imgs/pancake.jpg')} name='Shirokuma Cafe' description='Slice of Life bear anime' />
-						<Result img={require('../imgs/pancake.jpg')} name='Fate Stay: Pick ur Waifu' description='EX-Harem protagonist gets 3 routes: EKUSUKARIBAAAA, ojou-sama, kouhai' />	
-						<Result img={require('../imgs/pancake.jpg')} name='Shouta and Onee-san' description='shouta goes on adventure with his onee-san' />
-					</ScrollView>
+					<FlatList
+						data = {this.props.animeList}
+						renderItem ={({item}) => { 
+						return <Result img={item.img} name={item.title} description={item.description}/>}}
+					/>
 				</View>
 			</View>
 
@@ -85,7 +90,7 @@ const Result = (props) => {
 		<View style={{ width: '100%', padding: 5 }}>
 			<Card style={styles.resultCard}>
 				<View style={styles.resCont}>
-					<View style={styles.pic}><Image source={props.img} style={{ height: 60, width: 60 }} /></View>
+					<View style={styles.pic}><Image source={{uri: props.img}} style={{ height: 60, width: 60 }} /></View>
 					<Text style={{flex:1, paddingLeft: 5}}>
 						Name: {props.name} {"\n"}
 						Description: {props.description}
@@ -151,20 +156,16 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-	let stuff;
-	for (let i = 0; i < state.anime.animes.length; i++) {
-		let curr = state.anime.animes[i];
-		if (curr.id.toString() === props.match.params.id) {
-			stuff = curr;
-			break;
-		}
-	}
 	return {
-		anime: stuff
+		animeList: state.anime.searchAnimeList 
 	}
 };
 
-export default connect(mapStateToProps, null)(AnimeSearch);
+const mapDispatchToProps = (dispatch) => ({
+	searchApi: (title) => dispatch(searchAnime(title))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnimeSearch);
 
 
 

@@ -30,13 +30,20 @@ export const detailAnime = (id) => {
 
 export const searchAnime = (query) => {
 	return dispatch => {
-		return fetch(`https://api.jikan.moe/search/anime/${query}/1`)
+		return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
 			.then(resp => resp.json())
 			.then(json => {
-				console.log(json);
+
+				const data = json.data.map(item => 
+					
+					({
+					title: item.attributes.titles.en_jp,
+					description: item.attributes.synopsis,
+					img: item.attributes.posterImage.tiny
+				}))
 				dispatch({
 					type: SET_SEARCH_ANIME,
-					payload: {animes: json.result}
+					payload: {animes: data}
 				});
 			})
 	}
