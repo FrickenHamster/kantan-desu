@@ -1,4 +1,4 @@
-import { ADD, DELETE, DETAIL } from './constants';
+import { ADD, DELETE, DETAIL, SET_SEARCH_ANIME } from './constants';
 
 export const addAnime = (name, description) => {
 	return {
@@ -26,4 +26,19 @@ export const detailAnime = (id) => {
 			id: id
 		}
 	}
+};
+
+export const searchAnime = (query) => {
+	return dispatch => {
+		return fetch(`https://api.jikan.moe/search/anime/${query}/1`)
+			.then(resp => resp.json())
+			.then(json => {
+				console.log(json);
+				dispatch({
+					type: SET_SEARCH_ANIME,
+					payload: {animes: json.result}
+				});
+			})
+	}
+	
 };
