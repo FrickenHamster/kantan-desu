@@ -140,9 +140,7 @@ const styles = StyleSheet.create({
 		color: "#C1C0BC"
 	},
 	formContainer: {
-		fontSize: 18,
 		marginBottom: 8,
-		color: '#2e2e2e',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		marginTop: 20

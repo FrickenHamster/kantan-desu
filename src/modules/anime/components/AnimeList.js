@@ -74,7 +74,7 @@ export default class AnimeList extends Component {
 	
 	render() {
 		return (
-			<View>
+			<View style={{flex:1}}>
 				<FlatList 
 					data={this.props.animes}
 					renderItem={this.renderItem}

@@ -27,6 +27,7 @@
     "react-router-native": "^4.2.0",
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^3.7.2",
+    "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0"
   }
 }
