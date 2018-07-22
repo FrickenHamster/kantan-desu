@@ -1,43 +1,8 @@
 import { ADD, DELETE, SET_SEARCH_ANIME } from './constants';
 
 const initialState = {
-	animes: [
-		{
-			id: 0,
-			title: 'Meguca',
-			description: 'make keiyaku become meguca'
-		},
-		{
-			id: 1,
-			title: 'Steins;Gate',
-			description: 'moe time travelers'
-		},
-		{
-			id: 2,
-			title: 'Zero no Tsukaima',
-			description: 'tsundere magicians'
-		},
-		{
-			id: 3,
-			title: 'Hellsing',
-			description: 'vampires fight'
-		},
-		{
-			id: 4,
-			title: 'Elfen Lied',
-			description: 'gore waifus'
-		},
-		{
-			id: 5,
-			title: 'To Aru Majutsu no Index',
-			description: 'generic chuunibyou masterpiece'
-		},
-		{
-			id: 6,
-			title: 'Re: Zero',
-			description: 'isekai waifus'
-		}
-	],
+	//animes: {0:{id: 0, title: 'poop', description: 'pooppop', img: 'https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/117944.jpg' }},
+	animes: {},	
 	searchAnimeList: []
 };
 export default (state = initialState, action) => {
@@ -45,19 +10,17 @@ export default (state = initialState, action) => {
 		case ADD:
 			return {
 				...state,
-				animes: [...state.animes, {
-					id: state.animes.length, 
-					title: action.payload.name, 
-					description: action.payload.description}
-					]
+				animes: {
+					...state.animes, 
+					[action.payload.anime.id]: action.payload.anime
+				}
 			};
 		case DELETE:
-			const newAnimeArray = state.animes.filter(item => {
-				return (item.id !== action.payload.id);
-			});
+			const newAnimes = Object.assign({}, state.animes);
+			delete newAnimes[action.payload.id];
 			return {
 				...state,
-				animes: newAnimeArray
+				animes: newAnimes
 			};
 			
 		case SET_SEARCH_ANIME: {

@@ -63,12 +63,6 @@ class AddAnimePage extends Component {
 				<View
 					style={styles.buttonContainer}
 				>
-					<Button
-						title={'Add Anime'}
-						onPress={this.handleSubmit}
-						style={{flex: 1}}
-						color='#60DCE8'
-					/>
 				</View>
 			</View>)
 	}

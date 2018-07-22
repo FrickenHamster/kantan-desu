@@ -22,6 +22,7 @@
     "prop-types": "^15.6.1",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.0",
+    "react-native-scripts": "^1.14.0",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.2.0",
     "react-router-redux": "^5.0.0-alpha.9",

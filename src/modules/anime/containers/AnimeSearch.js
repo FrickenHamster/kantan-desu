@@ -7,7 +7,8 @@ import {
 	Image,
 	FlatList,
 	ScrollView,
-	TextInput
+	TextInput,
+	TouchableHighlight
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
@@ -17,7 +18,7 @@ import TopBar from '../components/TopBar';
 
 import Card from '../shared/components/Card';
 
-import { searchAnime } from '../actions';
+import { addAnime, searchAnime } from '../actions';
 
 class AnimeSearch extends Component {
 	constructor(props) {
@@ -30,6 +31,8 @@ class AnimeSearch extends Component {
 		this.handleChangeText = this.handleChangeText.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this._search = this._search.bind(this);
+		this._addToBacklog = this._addToBacklog.bind(this);
+		this.renderItem = this.renderItem.bind(this);
 	}
 
 	handleChangeText(name, value) {
@@ -43,6 +46,21 @@ class AnimeSearch extends Component {
 	_search(){
 		this.props.searchApi(this.state.title);
 	}
+
+	_addToBacklog(theChosenOne){
+		this.props.addAnime(theChosenOne);
+	}
+
+	renderItem({item}) {
+		return <Result anime={item} img={item.img} name={item.title} id={item.id} 
+		description={item.description} 
+		selected={this.props.backlog[item.id]} 
+		click={this._addToBacklog}/>
+	}
+
+	keyExtractor(item) {
+		return item.id;
+	};
 
 	render() {
 
@@ -64,19 +82,12 @@ class AnimeSearch extends Component {
 						</View>
 					</Card>
 				</View>
-				<View style={styles.buttonContainer}>
-					<Button
-						title={'Add Anime'}
-						onPress={this.handleSubmit}
-						style={{ flex: 1 }}
-						color='#0EC8EC'
-					/>
-				</View>
 				<View style={styles.results}>
 					<FlatList
-						data = {this.props.animeList}
-						renderItem ={({item}) => { 
-						return <Result img={item.img} name={item.title} description={item.description}/>}}
+						data={this.props.animeList}
+						extraData={this.props.backlog}
+						renderItem={this.renderItem}
+						keyExtractor={this.keyExtractor}
 					/>
 				</View>
 			</View>
@@ -87,16 +98,18 @@ class AnimeSearch extends Component {
 
 const Result = (props) => {
 	return (
-		<View style={{ width: '100%', padding: 5 }}>
-			<Card style={styles.resultCard}>
+		<View style={{ width: '100%', padding: 5 }} >
+			<TouchableHighlight onPress={() => props.click(props.anime)}>
+			<Card style={[styles.resultCard, (props.selected) ? styles.theChosenOnes : null]}>
 				<View style={styles.resCont}>
 					<View style={styles.pic}><Image source={{uri: props.img}} style={{ height: 60, width: 60 }} /></View>
-					<Text style={{flex:1, paddingLeft: 5}}>
+					<Text numberOfLines={3} style={{flex:1, paddingLeft: 5}}>
 						Name: {props.name} {"\n"}
 						Description: {props.description}
 					</Text>
 				</View>
 			</Card>
+			</TouchableHighlight>
 		</View>
 	)
 }
@@ -106,6 +119,9 @@ const styles = StyleSheet.create({
 		height: 40,
 		padding: 0,
 
+	},
+	theChosenOnes:{
+		backgroundColor: '#f0ffff'
 	},
 	searchCont: {
 		flex: 1,
@@ -157,21 +173,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
 	return {
-		animeList: state.anime.searchAnimeList 
+		animeList: state.anime.searchAnimeList,
+		backlog: state.anime.animes
 	}
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	searchApi: (title) => dispatch(searchAnime(title))
+	searchApi: (title) => dispatch(searchAnime(title)),
+	addAnime: (anime) => dispatch(addAnime(anime))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnimeSearch);
-
-
-
-
-
-/* const styles = StyleSheet.create({
-
-});
- */

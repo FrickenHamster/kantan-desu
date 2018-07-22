@@ -28,7 +28,7 @@ class AnimeMain extends Component {
 			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar title="Anime Backlog"/>
 				<AnimeList
-					animes={this.props.animes}
+					animes={Object.values(this.props.animes)}
 					deleteFunc={this.props.deleteAnime}
 					detailFunc={this.props.detailAnime}
 				/>
@@ -39,14 +39,6 @@ class AnimeMain extends Component {
 						bottom: 0,
 						width: '100%'
 					}}>
-					<Button
-						title='Add Anime'
-						onPress={this.props.gotoAddAnime}
-						color='#60DCE8'
-						style= {{
-						flex: 1
-					}}
-					/>
 					<Button
 						title='Anime Search'
 						onPress={this.props.searchAnime}
