@@ -32,7 +32,6 @@ export const searchAnime = (query) => {
 		return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
 			.then(resp => resp.json())
 			.then(json => {
-
 				const data = json.data.map(item => 
 					
 					({

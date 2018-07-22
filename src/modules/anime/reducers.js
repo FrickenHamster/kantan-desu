@@ -1,11 +1,15 @@
 import { ADD, DELETE, SET_SEARCH_ANIME } from './constants';
 
+import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
 const initialState = {
 	//animes: {0:{id: 0, title: 'poop', description: 'pooppop', img: 'https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/117944.jpg' }},
 	animes: {},	
 	searchAnimeList: []
 };
-export default (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD:
 			return {
@@ -34,3 +38,10 @@ export default (state = initialState, action) => {
 			return state;
 	}
 }
+
+export default persistReducer({
+	key: 'anime',
+	storage: storage,
+	blacklist: ['searchAnimeList']
+},
+	reducer);

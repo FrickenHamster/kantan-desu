@@ -1,4 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import anime from './modules/anime/index';
 
@@ -23,9 +25,12 @@ export default (state = initialState) => {
 		router: routerReducer
 	});
 
-	return createStore(rootReducer, 
+	const store = createStore(rootReducer,
 		applyMiddleware(
-			middleware, 
+			middleware,
 			thunk
 		));
+
+	const persistor = persistStore(store);
+	return { store, persistor }
 }
