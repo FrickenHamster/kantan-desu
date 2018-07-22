@@ -1,11 +1,10 @@
 import { ADD, DELETE, DETAIL, SET_SEARCH_ANIME } from './constants';
 
-export const addAnime = (name, description) => {
+export const addAnime = (theChosenOne) => {
 	return {
 		type: ADD,
 		payload: {
-			name: name,
-			description: description
+			anime: theChosenOne
 		}
 	}
 };
@@ -37,6 +36,7 @@ export const searchAnime = (query) => {
 				const data = json.data.map(item => 
 					
 					({
+					id: item.id,
 					title: item.attributes.titles.en_jp,
 					description: item.attributes.synopsis,
 					img: item.attributes.posterImage.tiny

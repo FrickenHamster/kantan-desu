@@ -5,7 +5,8 @@ import {
 	View,
 	StyleSheet,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
+	Image
 }  from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -35,11 +36,11 @@ class AnimeListItem extends PureComponent{
 		return (
 			<Card>
 			<View style={styles.itemContainer}>
-				<View>					
-				<Text style={[styles.titleText, styles.textContainer]} onPress={this.detailClick}>{this.props.item}</Text>
-				<Text style={styles.descriptionText}>{this.props.description}</Text>
-				</View>
-				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" backgroundColor="#D7776B" size={32}/></TouchableOpacity></View>
+				<View style={styles.pic}><Image source={{uri: this.props.img}} style={{ height: 60, width: 60 }} /></View>
+					<Text numberOfLines={3} style={{flex: 1, paddingLeft: 5}}>
+						{this.props.title}
+					</Text>	
+				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" backgroundColor="#D7776B" size={16}/></TouchableOpacity></View>
 			</View>
 			</Card>
 		)
@@ -55,8 +56,9 @@ export default class AnimeList extends Component {
 	renderItem(val) {
 		return (<AnimeListItem
 			deleteFunc={this.props.deleteFunc} 
-			item={val.item.title}
+			title={val.item.title}
 			id={val.item.id}
+			img={val.item.img}
 			description={val.item.description}
 			detailFunc={this.props.detailFunc}
 		/>);
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	titleText: {
-		fontSize: 20
+		fontSize: 16
 	},
 	textContainer: {
 		justifyContent: 'flex-start'
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end'
 	},
 	descriptionText: {
-		fontSize: 14
+		fontSize: 12
 	},
 	separator: {
 		flex: 1,
