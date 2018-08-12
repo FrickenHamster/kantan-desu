@@ -1,5 +1,5 @@
 import React, { Component, PureComponent } from 'react';
-import { Feather } from '@expo/vector-icons'
+import Feather from 'react-native-vector-icons/dist/Feather';
 import {
 	FlatList,
 	View,
@@ -36,10 +36,10 @@ class AnimeListItem extends PureComponent{
 		return (
 			<Card>
 			<View style={styles.itemContainer}>
-				<View style={styles.pic}><Image source={{uri: this.props.img}} style={{ height: 60, width: 60 }} /></View>
-					<Text numberOfLines={3} style={{flex: 1, paddingLeft: 5}}>
-						{this.props.title}
-					</Text>	
+				<View style={styles.pic}><Image source={{uri: this.props.img}} style={{ height: 60, width: 60, justifyContent: 'center' }} /></View>
+				<Text numberOfLines={3} style={{flex: 1, paddingLeft: 8, fontSize: 34}}>
+					{this.props.title}
+				</Text>	
 				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" backgroundColor="#D7776B" size={16}/></TouchableOpacity></View>
 			</View>
 			</Card>
@@ -90,7 +90,7 @@ export default class AnimeList extends Component {
 
 const styles = StyleSheet.create({
 	itemContainer: {
-		height: 80,
+		height: 60,
 		width: '100%',
 		paddingHorizontal: 12,
 		flexDirection: 'row',
