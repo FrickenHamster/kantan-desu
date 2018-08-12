@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { Feather } from '@expo/vector-icons';
+import Feather from 'react-native-vector-icons/dist/Feather';
 
 export default class TopBar extends Component {
 	constructor(props) {
@@ -25,15 +25,18 @@ export default class TopBar extends Component {
 		this.context.router.history.goBack();
 	}
 
-
 	render() {
-
 		return (
-        	<View>
+			<View style={{height: 40}}>
 				<Text style={styles.title}>{this.props.title}</Text>
-				<View><Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleClick}/></View>
+				<View>
+					{
+						this.props.allowBack &&
+						<Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleClick}/>
+					}
+				</View>
 			</View>
-        )
+		)
 	}
 }
 

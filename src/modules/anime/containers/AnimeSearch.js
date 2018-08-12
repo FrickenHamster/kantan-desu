@@ -10,7 +10,7 @@ import {
 	TextInput,
 	TouchableHighlight
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import Feather from 'react-native-vector-icons/dist/Feather';
 
 import { connect } from 'react-redux';
 
@@ -26,7 +26,7 @@ class AnimeSearch extends Component {
 
 		this.state = {
 			title: ''
-		}
+		};
 
 		this.handleChangeText = this.handleChangeText.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,7 +66,7 @@ class AnimeSearch extends Component {
 
 		return (
 			<View style={{ flex: 1, backgroundColor: '#fafafa' }}>
-				<TopBar title="Anime Search" />
+				<TopBar title="Anime Search" allowBack/>
 				<View style={styles.formContainer}>
 					<Card style={styles.customSearch}>
 						<View style={styles.searchCont}>
@@ -112,7 +112,7 @@ const Result = (props) => {
 			</TouchableHighlight>
 		</View>
 	)
-}
+};
 
 const styles = StyleSheet.create({
 	customSearch: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	resCont: {
 		flexDirection: 'row',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		marginTop: 20
+		marginTop: 30
 	},
 	buttonContainer: {
 		alignSelf: 'flex-end',
