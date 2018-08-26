@@ -1,5 +1,12 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "name": "Kantan Desu ~Anime Backlog~",
+    "icon": "./ic_launcher/web_hi_res_512.png",
+    "version": "1.0.0",
+    "sdkVersion": "26.0.0",
+    "slug": "kantan-desu",
+    "android": {
+      "package": "com.hamsterhole.kantandesu"
+    }
   }
 }
