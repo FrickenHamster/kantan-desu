@@ -1,4 +1,4 @@
-import { ADD, DELETE, SET_DETAIL_ANIME, SET_SEARCH_ANIME } from './constants';
+import { ADD, DELETE, SET_DETAIL_ANIME, SET_SEARCH_ANIME, SET_SEARCH_BUSY } from './constants';
 
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
@@ -8,6 +8,7 @@ const initialState = {
 	animes: {},	
 	searchAnimeList: [],
 	detailAnime: null,
+	searchBusy: false,
 };
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -25,6 +26,12 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				animes: newAnimes
+			};
+			
+		case SET_SEARCH_BUSY :
+			return {
+				...state,
+				searchBusy: action.payload.busy,
 			};
 			
 		case SET_SEARCH_ANIME: {

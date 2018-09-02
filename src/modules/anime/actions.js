@@ -1,4 +1,4 @@
-import { ADD, DELETE, DETAIL, SET_DETAIL_ANIME, SET_SEARCH_ANIME } from './constants';
+import { ADD, DELETE, DETAIL, SET_DETAIL_ANIME, SET_SEARCH_ANIME, SET_SEARCH_BUSY } from './constants';
 import { pushHistory } from "../config/actions";
 
 export const addAnime = (theChosenOne) => {
@@ -81,6 +81,14 @@ export const fetchAnimeDetails = id => {
 
 export const searchAnime = (query) => {
 	return dispatch => {
+		
+		dispatch({
+			type: SET_SEARCH_BUSY,
+			payload: {
+				busy: true
+			}
+		});
+		
 		return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
 			.then(resp => resp.json())
 			.then(json => {
@@ -95,6 +103,12 @@ export const searchAnime = (query) => {
 				dispatch({
 					type: SET_SEARCH_ANIME,
 					payload: {animes: data}
+				});
+				dispatch({
+					type: SET_SEARCH_BUSY,
+					payload: {
+						busy: false
+					}
 				});
 			})
 	}

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-	Button,
-	View,
+	ActivityIndicator,
+	FlatList,
+	Image,
 	StyleSheet,
 	Text,
-	Image,
-	FlatList,
-	ScrollView,
-	TextInput,
-	TouchableHighlight
+	TouchableHighlight,
+	View,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -82,6 +80,7 @@ class AnimeSearch extends Component {
 								name={'title'}
 								value={this.state.title}
 								onChangeText={this.handleChangeText}
+								onSubmitEditing={this._search}
 								style={styles.formInput}
 								placeholder='Title'
 								maxLength={100}
@@ -90,13 +89,21 @@ class AnimeSearch extends Component {
 						</View>
 					</Card>
 				</View>
-				<View style={styles.results}>
-					<FlatList
-						data={this.props.animeList}
-						extraData={this.props.backlog}
-						renderItem={this.renderItem}
-						keyExtractor={this.keyExtractor}
-					/>
+				<View>
+					{
+						this.props.busy ? 
+							<ActivityIndicator
+								size="large"
+							/>
+							:
+							<FlatList
+								data={this.props.animeList}
+								extraData={this.props.backlog}
+								renderItem={this.renderItem}
+								keyExtractor={this.keyExtractor}
+							/>
+						
+					}
 				</View>
 			</View>
 
@@ -111,11 +118,11 @@ const Result = ({id, click, anime, name, img, selected, detailAnime}) => {
 				<Card style={[styles.resultCard, (selected) ? styles.theChosenOnes : null]}>
 					<View style={styles.resCont}>
 						<View style={styles.pic}><Image source={{uri: img}} style={{height: 60, width: 60}}/></View>
-						<View>
-							<Text numberOfLines={2} style={{flex: 1, paddingLeft: 5}}>
+						<View style={{flex: 1}}>
+							<Text numberOfLines={2} style={{textAlign: 'center'}}>
 								{name}
 							</Text>
-							<Text>{moment(anime.startDate).format('YYYY')}</Text>
+							<Text style={{ textAlign: 'center' }}>{moment(anime.startDate).format('YYYY')}</Text>
 						</View>
 					</View>
 				</Card>
@@ -177,7 +184,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, props) => {
 	return {
 		animeList: state.anime.searchAnimeList,
-		backlog: state.anime.animes
+		backlog: state.anime.animes,
+		busy: state.anime.searchBusy,
 	}
 };
 
