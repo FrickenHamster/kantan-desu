@@ -1,4 +1,4 @@
-package com.hamsterhole.kantandesu;
+package com.kantandesu;
 
 import android.app.Application;
 
