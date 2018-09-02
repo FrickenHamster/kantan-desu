@@ -2,17 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import {
 	Button,
 	View,
-	Text,
 	StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 
 import AnimeList from '../components/AnimeList';
-import { push } from 'react-router-redux';
+import { pushHistory } from "../../config/actions";
 
-import { deleteAnime, searchAnime } from '../actions';
+import { deleteAnime, goToAnimeDetail } from '../actions';
 
-import TopBar from '../components/TopBar';
+import TopBar from '../../shared/components/TopBar';
 
 class AnimeMain extends Component {
 	constructor(props){
@@ -20,7 +19,7 @@ class AnimeMain extends Component {
 	}
 	
 	componentDidMount() {
-
+		//this.props.searchAnime()
 	}
 
 	render() {
@@ -30,7 +29,7 @@ class AnimeMain extends Component {
 				<AnimeList
 					animes={Object.values(this.props.animes)}
 					deleteFunc={this.props.deleteAnime}
-					detailFunc={this.props.detailAnime}
+					detailFunc={this.props.goToAnimeDetail}
 				/>
 				<View
 					style={{
@@ -43,9 +42,7 @@ class AnimeMain extends Component {
 						title='Anime Search'
 						onPress={this.props.searchAnime}
 						color='#0EC8EC'
-						style= {{
-						flex: 1
-					}}
+						style={{flex: 1}}
 					/>
 
 				</View>
@@ -56,9 +53,6 @@ class AnimeMain extends Component {
 }
 
 const styles = StyleSheet.create({
-	descrip: {
-		color: '#9d8189'
-	}
 });
 
 const mapStateToProps = (state) => {
@@ -68,19 +62,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	gotoAddAnime: () => {
-		dispatch(push('/addanime'));
-	},
 	deleteAnime: (id) => {
 		dispatch(deleteAnime(id));
 		//handle with saga later
-		dispatch(push('/'));
 	},
- 	detailAnime: (id) => {
-		dispatch(push(`/animedetail/${id}`)); 
-	},
-	searchAnime: (id) => {
-		dispatch(push('/animesearch'));
+	goToAnimeDetail: (id) => dispatch(goToAnimeDetail(id)),
+	searchAnime: () => {
+		dispatch(pushHistory('/animesearch'));
 	}
 });
 

@@ -10,15 +10,18 @@ import {
 	TextInput,
 	TouchableHighlight
 } from 'react-native';
-import Feather from 'react-native-vector-icons/dist/Feather';
-
 import { connect } from 'react-redux';
 
-import TopBar from '../components/TopBar';
+import Feather from 'react-native-vector-icons/dist/Feather';
+import moment from 'moment';
 
-import Card from '../shared/components/Card';
+import FormTextInput from '../components/FormTextInput';
+import TopBar from '../../shared/components/TopBar';
 
-import { addAnime, searchAnime } from '../actions';
+import Card from '../../shared/components/Card';
+
+import { addAnime, goToAnimeDetail, searchAnime } from '../actions';
+
 
 class AnimeSearch extends Component {
 	constructor(props) {
@@ -35,27 +38,33 @@ class AnimeSearch extends Component {
 		this.renderItem = this.renderItem.bind(this);
 	}
 
+	componentDidMount() {
+		this._search();
+	}
+
 	handleChangeText(name, value) {
-		this.setState({ title: value });
+		this.setState({title: value});
 	}
 
 	handleSubmit() {
 		console.log('submitting');
 	}
 
-	_search(){
+	_search() {
 		this.props.searchApi(this.state.title);
 	}
 
-	_addToBacklog(theChosenOne){
+	_addToBacklog(theChosenOne) {
 		this.props.addAnime(theChosenOne);
 	}
 
 	renderItem({item}) {
-		return <Result anime={item} img={item.img} name={item.title} id={item.id} 
-		description={item.description} 
-		selected={this.props.backlog[item.id]} 
-		click={this._addToBacklog}/>
+		return <Result
+			anime={item} img={item.img} name={item.title} id={item.id}
+			selected={this.props.backlog[item.id]}
+			click={this._addToBacklog}
+			detailAnime={this.props.detailAnime}
+		/>
 	}
 
 	keyExtractor(item) {
@@ -63,9 +72,8 @@ class AnimeSearch extends Component {
 	};
 
 	render() {
-
 		return (
-			<View style={{ flex: 1, backgroundColor: '#fafafa' }}>
+			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar title="Anime Search" allowBack/>
 				<View style={styles.formContainer}>
 					<Card style={styles.customSearch}>
@@ -78,7 +86,7 @@ class AnimeSearch extends Component {
 								placeholder='Title'
 								maxLength={100}
 							/>
-							<Feather name="search" size={20} style={styles.searchIcon} onPress={this._search} />
+							<Feather name="search" size={20} style={styles.searchIcon} onPress={this._search}/>
 						</View>
 					</Card>
 				</View>
@@ -96,19 +104,21 @@ class AnimeSearch extends Component {
 	}
 }
 
-const Result = (props) => {
+const Result = ({id, click, anime, name, img, selected, detailAnime}) => {
 	return (
-		<View style={{ width: '100%', padding: 5 }} >
-			<TouchableHighlight onPress={() => props.click(props.anime)}>
-			<Card style={[styles.resultCard, (props.selected) ? styles.theChosenOnes : null]}>
-				<View style={styles.resCont}>
-					<View style={styles.pic}><Image source={{uri: props.img}} style={{ height: 60, width: 60 }} /></View>
-					<Text numberOfLines={3} style={{flex:1, paddingLeft: 5}}>
-						Name: {props.name} {"\n"}
-						Description: {props.description}
-					</Text>
-				</View>
-			</Card>
+		<View style={{width: '100%', padding: 5}}>
+			<TouchableHighlight onPress={() => click(anime)} onLongPress={() => detailAnime(id)}>
+				<Card style={[styles.resultCard, (selected) ? styles.theChosenOnes : null]}>
+					<View style={styles.resCont}>
+						<View style={styles.pic}><Image source={{uri: img}} style={{height: 60, width: 60}}/></View>
+						<View>
+							<Text numberOfLines={2} style={{flex: 1, paddingLeft: 5}}>
+								{name}
+							</Text>
+							<Text>{moment(anime.startDate).format('YYYY')}</Text>
+						</View>
+					</View>
+				</Card>
 			</TouchableHighlight>
 		</View>
 	)
@@ -118,9 +128,8 @@ const styles = StyleSheet.create({
 	customSearch: {
 		height: 40,
 		padding: 0,
-
 	},
-	theChosenOnes:{
+	theChosenOnes: {
 		backgroundColor: '#f0ffff'
 	},
 	searchCont: {
@@ -131,8 +140,6 @@ const styles = StyleSheet.create({
 	},
 	resCont: {
 		flexDirection: 'row',
-		//justifyContent: 'center',
-		//alignItems: 'center',
 		padding: 5
 	},
 	searchIcon: {
@@ -143,7 +150,8 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		marginTop: 30
+		marginTop: 30,
+		width: '80%',
 	},
 	buttonContainer: {
 		alignSelf: 'flex-end',
@@ -163,9 +171,6 @@ const styles = StyleSheet.create({
 		width: 60,
 		alignItems: 'center',
 		justifyContent: 'center',
-		//paddingLeft: 5
-		// paddingBottom: 20,
-		// marginTop: 20
 	}
 });
 
@@ -178,7 +183,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	searchApi: (title) => dispatch(searchAnime(title)),
-	addAnime: (anime) => dispatch(addAnime(anime))
+	addAnime: (anime) => dispatch(addAnime(anime)),
+	detailAnime: (id) => dispatch(goToAnimeDetail(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnimeSearch);

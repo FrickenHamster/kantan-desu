@@ -3,13 +3,15 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import anime from './modules/anime/index';
+import config from './modules/config/index';
 
-import { routerReducer, routerMiddleware } from 'react-router-redux'
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import history from '../config/history';
 
 import thunk from 'redux-thunk';
 
 const middleware = routerMiddleware(history);
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
 	animes: [
@@ -22,14 +24,18 @@ const initialState = {
 export default (state = initialState) => {
 	const rootReducer = combineReducers({
 		anime: anime.reducers,
-		router: routerReducer
+		config: config.reducers,
 	});
-
-	const store = createStore(rootReducer,
-		applyMiddleware(
-			middleware,
-			thunk
-		));
+	
+	const store = createStore(
+		connectRouter(history)(rootReducer),
+		composeWithDevTools(
+			applyMiddleware(
+				middleware,
+				thunk
+			)
+		)
+	);
 
 	const persistor = persistStore(store);
 	return { store, persistor }

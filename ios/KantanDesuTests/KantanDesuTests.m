@@ -14,11 +14,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface kdnewTests : XCTestCase
+@interface KantanDesuTests : XCTestCase
 
 @end
 
-@implementation kdnewTests
+@implementation KantanDesuTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

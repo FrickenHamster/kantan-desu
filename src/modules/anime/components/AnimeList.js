@@ -8,12 +8,8 @@ import {
 	TouchableOpacity,
 	Image
 }  from 'react-native';
-import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-
-import Card from '../shared/components/Card';
+import Card from '../../shared/components/Card';
 
 
 class AnimeListItem extends PureComponent{
@@ -33,15 +29,25 @@ class AnimeListItem extends PureComponent{
 	}
 
 	render() {
+
 		return (
 			<Card>
-			<View style={styles.itemContainer}>
-				<View style={styles.pic}><Image source={{uri: this.props.img}} style={{ height: 60, width: 60, justifyContent: 'center' }} /></View>
-				<Text numberOfLines={3} style={{flex: 1, paddingLeft: 8, fontSize: 34}}>
-					{this.props.title}
-				</Text>	
-				<View style={styles.deleteButton}><TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather name="delete" color="#524c84" backgroundColor="#D7776B" size={16}/></TouchableOpacity></View>
-			</View>
+				<TouchableOpacity onLongPress={this.detailClick}>
+					<View style={styles.itemContainer}>
+						<View style={styles.pic}>
+							<Image source={{uri: this.props.img}}
+								   style={{height: 60, width: 60, justifyContent: 'center'}}/>
+						</View>
+						<Text numberOfLines={2}
+							  style={[styles.itemTitle, this.props.title.length > 18 && styles.itemTitleLong]}>
+							{this.props.title}
+						</Text>
+						<View style={styles.deleteButton}>
+							<TouchableOpacity onPress={this.handleClick} style={styles.buttonContainer}><Feather
+								name="delete" color="#524c84" backgroundColor="#D7776B" size={16}/></TouchableOpacity>
+						</View>
+					</View>
+				</TouchableOpacity>
 			</Card>
 		)
 	}
@@ -90,11 +96,20 @@ export default class AnimeList extends Component {
 
 const styles = StyleSheet.create({
 	itemContainer: {
+		alignItems: 'center',
 		height: 60,
 		width: '100%',
 		paddingHorizontal: 12,
 		flexDirection: 'row',
 		justifyContent: 'space-between'
+	},
+	itemTitle: {
+		flex: 1,
+		fontSize: 30,
+		paddingLeft: 8
+	},
+	itemTitleLong: {
+		fontSize: 18
 	},
 	titleText: {
 		fontSize: 16
