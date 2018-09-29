@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
 import { Provider } from 'react-redux';
 
 import createStore from './src/createStore';
@@ -43,10 +43,17 @@ export default class App extends React.Component {
 				>
 					<PersistGate persistor={store.persistor}
 								 onBeforeLift={this.beforeLift}
+								 loading={<View style={{flex: 1, alignItems: 'center', height: 400, justifyContent: 'center'}}>
+									 <ActivityIndicator
+										 size="large"
+									 />
+								 </View>}
 					>
 						{
-							(<View style={{flex: 1, alignItems: 'center'}}>
-								<Text>LOADING</Text>
+							(<View style={{flex: 1, alignItems: 'center', height: 400, justifyContent: 'center'}}>
+								<ActivityIndicator
+									size="large"
+								/>
 							</View>)
 						}
 					</PersistGate>
@@ -59,6 +66,11 @@ export default class App extends React.Component {
 			>
 				<PersistGate persistor={store.persistor}
 							 onBeforeLift={this.beforeLift}
+							 loading={<View style={{flex: 1, alignItems: 'center', height: 400, justifyContent: 'center'}}>
+								 <ActivityIndicator
+									 size="large"
+								 />
+							 </View>}
 				>
 					{
 

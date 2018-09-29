@@ -13,6 +13,8 @@ import thunk from 'redux-thunk';
 const middleware = routerMiddleware(history);
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import migrations from './modules/anime/migrations';
+
 const initialState = {
 	animes: [
 		'Meguca',
