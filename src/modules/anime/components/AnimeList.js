@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 	},
 	itemTitle: {
 		flex: 1,
-		fontSize: 30,
+		fontSize: 26,
 		paddingLeft: 8
 	},
 	itemTitleLong: {

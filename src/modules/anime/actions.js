@@ -1,4 +1,4 @@
-import { ADD, DELETE, DETAIL, SET_DETAIL_ANIME, SET_SEARCH_ANIME, SET_SEARCH_BUSY } from './constants';
+import { ADD, DELETE, DETAIL, SET_DETAIL_ANIME, SET_SEARCH_ANIME, SET_SEARCH_BUSY, SORT_ANIME_LIST } from './constants';
 import { pushHistory } from "../config/actions";
 
 export const addAnime = (theChosenOne) => {
@@ -113,4 +113,13 @@ export const searchAnime = (query) => {
 			})
 	}
 	
+};
+
+export const sortAnime = sortBy => {
+	return {
+		type: SORT_ANIME_LIST,
+		payload: {
+			sortBy
+		},
+	}
 };

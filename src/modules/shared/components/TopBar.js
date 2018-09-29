@@ -3,6 +3,7 @@ import {
 	View,
 	StyleSheet,
 	Text,
+	TouchableHighlight
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -29,16 +30,23 @@ class TopBar extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<View style={{alignSelf: 'flex-start', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+				<View style={{alignSelf: 'flex-start', justifyContent: 'center', alignItems: 'center', height: '100%', width: 40}}>
 					{
 						this.props.allowBack &&
-						<Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleBack}/>
+						<TouchableHighlight>
+							<Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleBack}/>
+						</TouchableHighlight>
 					}
 				</View>
 				<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
 					<Text style={[styles.title, this.props.title.length > 18 ? styles.longTitle : null]} numberOfLines={1}>
 						{this.props.title}
 					</Text>
+				</View>
+				<View style={{alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', height: '100%', width: 40}}>
+					{
+						this.props.right
+					}
 				</View>
 			</View>
 		)
