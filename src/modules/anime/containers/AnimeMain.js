@@ -25,7 +25,7 @@ class AnimeMain extends Component {
 		this.handleSortButton = this.handleSortButton.bind(this);
 	}
 	
-	handleSortButton(index) {
+	handleSortButton() {
 		let SheetView = RNBottomActionSheet.SheetView;
 		SheetView.Show({
 			title: "Sort By",

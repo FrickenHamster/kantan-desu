@@ -101,8 +101,8 @@ android {
         applicationId "com.hamsterhole.kantandesu"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 5
-        versionName "1.2.0"
+        versionCode 6
+        versionName "1.2.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

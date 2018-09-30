@@ -79,10 +79,10 @@ const reducer = (state = initialState, action) => {
 			let newListOrder;
 			switch (action.payload.sortBy) {
 				case ALPHABETICAL :
-					newListOrder = state.listOrder.sort((a, b) => state.animes[a].title >= state.animes[b].title).slice();
+					newListOrder = state.listOrder.slice().sort((a, b) => state.animes[a].title >= state.animes[b].title ? 1 : -1);
 					break;
 				case RELEASE_DATE:
-					newListOrder = state.listOrder.sort((a, b) => moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate))).slice();
+					newListOrder = state.listOrder.slice().sort((a, b) => moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate) ? 1 : -1));
 					break;
 				default:
 					newListOrder = state.listOrder;
