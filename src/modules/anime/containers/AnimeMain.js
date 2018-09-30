@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+	Alert,
 	Button,
 	View,
 	StyleSheet,
@@ -25,7 +26,10 @@ class AnimeMain extends Component {
 		this.handleSortButton = this.handleSortButton.bind(this);
 	}
 	
-	handleSortButton(index) {
+	handleSortButton() {
+		const a = [4,6,2,3];
+		a.sort((a, b) => a > b);
+		Alert.alert(a.join(','))
 		let SheetView = RNBottomActionSheet.SheetView;
 		SheetView.Show({
 			title: "Sort By",
@@ -40,6 +44,8 @@ class AnimeMain extends Component {
 			onSelection: (index, value) => {
 				if (value === 'cancel')
 					return;
+				//Alert.alert('sfdfe' + index + value)
+
 				this.props.sortAnime(value);
 			}
 		});

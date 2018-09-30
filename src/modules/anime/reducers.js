@@ -9,6 +9,8 @@ import {
 	SORT_ANIME_LIST
 } from './constants';
 
+import {Alert} from 'react-native'
+
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -77,12 +79,20 @@ const reducer = (state = initialState, action) => {
 		
 		case SORT_ANIME_LIST: {
 			let newListOrder;
+			
+			
 			switch (action.payload.sortBy) {
 				case ALPHABETICAL :
-					newListOrder = state.listOrder.sort((a, b) => state.animes[a].title >= state.animes[b].title).slice();
+					newListOrder = state.listOrder.slice().sort((a, b) => {
+						//Alert.alert(state.animes[a].title + ',' + state.animes[b].title);
+						return state.animes[a].title >= state.animes[b].title});
+					//Alert.alert('alpha' + state.listOrder.join(',') + ':' + newListOrder.join(','))
+
 					break;
 				case RELEASE_DATE:
-					newListOrder = state.listOrder.sort((a, b) => moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate))).slice();
+					newListOrder = state.listOrder.slice().sort((a, b) => moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate)));
+					//Alert.alert('release' + state.listOrder.join(',') + ':' + newListOrder.join(','))
+
 					break;
 				default:
 					newListOrder = state.listOrder;

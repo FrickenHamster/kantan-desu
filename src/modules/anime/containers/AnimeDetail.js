@@ -83,7 +83,7 @@ class AnimeDetail extends Component {
 					<TopBar title={this.props.anime.title} allowBack/>
 				</View>
 				<ScrollView>
-					<View style={{alignItems: 'center', marginBottom: 200}}>
+					{/*<View style={{alignItems: 'center', marginBottom: 200}}>
 						<View style={styles.pic}>
 							<Image
 								source={{uri: img}}
@@ -107,7 +107,7 @@ class AnimeDetail extends Component {
 						{anime.averageRating && <StatText label='Rating' value={anime.averageRating}/>}
 						{anime.ageRating && <StatText label='Age Rating' value={anime.ageRating}/>}
 						{this.renderButtons()}
-					</View>
+					</View>*/}
 				</ScrollView>
 			</View>)
 	}
