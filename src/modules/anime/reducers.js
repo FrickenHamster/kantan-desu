@@ -9,7 +9,6 @@ import {
 	SORT_ANIME_LIST
 } from './constants';
 
-import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { createMigrate } from 'redux-persist';
@@ -82,7 +81,7 @@ const reducer = (state = initialState, action) => {
 					newListOrder = state.listOrder.slice().sort((a, b) => state.animes[a].title >= state.animes[b].title ? 1 : -1);
 					break;
 				case RELEASE_DATE:
-					newListOrder = state.listOrder.slice().sort((a, b) => moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate) ? 1 : -1));
+					newListOrder = state.listOrder.slice().sort((a, b) => (moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate))) ? 1 : -1);
 					break;
 				default:
 					newListOrder = state.listOrder;
