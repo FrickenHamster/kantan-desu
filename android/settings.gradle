@@ -1,4 +1,6 @@
 rootProject.name = 'KantanDesu'
+include ':react-native-bottom-action-sheet'
+project(':react-native-bottom-action-sheet').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-bottom-action-sheet/android')
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 

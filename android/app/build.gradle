@@ -101,7 +101,7 @@ android {
         applicationId "com.hamsterhole.kantandesu"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 4
+        versionCode 5
         versionName "1.2.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-bottom-action-sheet')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:27.1.1"

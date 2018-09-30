@@ -11,17 +11,13 @@ import { connect } from 'react-redux';
 import AnimeList from '../components/AnimeList';
 import { pushHistory } from "../../config/actions";
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
-import ActionSheet from 'react-native-actionsheet';
 
 import { deleteAnime, goToAnimeDetail, sortAnime } from '../actions';
 
 import TopBar from '../../shared/components/TopBar';
 import { ALPHABETICAL, RELEASE_DATE } from "../constants";
 
-const sortOptions = [
-	{key: RELEASE_DATE, name: 'Release Date'},
-	{key: ALPHABETICAL, name: 'Alphabetical'},
-];
+import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 
 class AnimeMain extends Component {
 	constructor(props){
@@ -30,14 +26,27 @@ class AnimeMain extends Component {
 	}
 	
 	handleSortButton(index) {
-		if (index < sortOptions.length)
-			this.props.sortAnime(sortOptions[index].key)
+		let SheetView = RNBottomActionSheet.SheetView;
+		SheetView.Show({
+			title: "Sort By",
+			items: [
+				{ title: "Alphabetical", value: ALPHABETICAL,  },
+				{ title: "Release Date", value: RELEASE_DATE, },
+				{ title: "Nevermind", value: 'cancel', },
+			],
+			theme: "light",
+			selection: 3,
+			dividerItem: (<Text>poop</Text>),
+			onSelection: (index, value) => {
+				if (value === 'cancel')
+					return;
+				this.props.sortAnime(value);
+			}
+		});
 	}
 
 	render() {
 		const animeList = this.props.listOrder.map(item => this.props.animes[item]);
-		const options = sortOptions.map(item => item.name);
-		options.push('Nevermind');
 		return (
 			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar title="Anime Backlog"
@@ -45,7 +54,7 @@ class AnimeMain extends Component {
 							<TouchableHighlight>
 								<FontAwesome 
 									name="sort-amount-desc" color="#fffafa" size={32} 
-									onPress={() => this.ActionSheet.show()}
+									onPress={this.handleSortButton}
 								/>
 							</TouchableHighlight>}
 				/>
@@ -56,13 +65,6 @@ class AnimeMain extends Component {
 						detailFunc={this.props.goToAnimeDetail}
 					/>
 				</View>
-				<ActionSheet
-					ref={o => this.ActionSheet = o}
-					title={<Text style={{color: '#000', fontSize: 18}}>Sort by</Text>}
-					options={options}
-					cancelButtonIndex={sortOptions.length}
-					onPress={this.handleSortButton}
-				/>
 				<View
 					style={{
 						alignSelf: 'flex-end',
