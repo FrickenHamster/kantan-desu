@@ -1,7 +1,7 @@
 import {
 	ADD,
 	ALPHABETICAL,
-	DELETE, 
+	DELETE, RATING,
 	RELEASE_DATE,
 	SET_DETAIL_ANIME,
 	SET_SEARCH_ANIME,
@@ -82,6 +82,9 @@ const reducer = (state = initialState, action) => {
 					break;
 				case RELEASE_DATE:
 					newListOrder = state.listOrder.slice().sort((a, b) => (moment(state.animes[a].startDate).isBefore(moment(state.animes[b].startDate))) ? 1 : -1);
+					break;
+				case RATING:
+					newListOrder = state.listOrder.slice().sort((a, b) => state.animes[a].averageRating < state.animes[b].averageRating ? 1 : -1);
 					break;
 				default:
 					newListOrder = state.listOrder;

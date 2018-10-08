@@ -15,7 +15,7 @@ import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 import { deleteAnime, goToAnimeDetail, sortAnime } from '../actions';
 
 import TopBar from '../../shared/components/TopBar';
-import { ALPHABETICAL, RELEASE_DATE } from "../constants";
+import { ALPHABETICAL, RATING, RELEASE_DATE } from "../constants";
 
 import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 
@@ -32,6 +32,7 @@ class AnimeMain extends Component {
 			items: [
 				{ title: "Alphabetical", value: ALPHABETICAL,  },
 				{ title: "Release Date", value: RELEASE_DATE, },
+				{ title: "Rating", value: RATING, },
 				{ title: "Nevermind", value: 'cancel', },
 			],
 			theme: "light",

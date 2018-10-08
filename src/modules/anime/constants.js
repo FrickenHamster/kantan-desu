@@ -20,3 +20,5 @@ export const SORT_ANIME_LIST = `SORT_ANIME_LIST`;
 export const ALPHABETICAL = 'ALPHABETICAL';
 
 export const RELEASE_DATE = 'RELEASE_DATE';
+
+export const RATING = 'RATING';
