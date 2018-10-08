@@ -46,12 +46,15 @@ export const goToAnimeDetail = id => {
 			.then(resp => resp.json())
 			.then(json => {
 				const data = json.data;
+				let title = data.attributes.titles.en_jp ? data.attributes.titles.en_jp : data.attributes.titles[Object.keys(data.attributes.titles)[0]];
+				if (!title)
+					title = 'Missing Title';
 				dispatch({
 					type: SET_DETAIL_ANIME,
 					payload: {
 						anime: {
 							id: data.id,
-							title: data.attributes.titles.en_jp,
+							title,
 							description: data.attributes.synopsis,
 							img: data.attributes.posterImage.tiny,
 							largeImg: data.attributes.posterImage.large,
@@ -92,14 +95,20 @@ export const searchAnime = (query) => {
 		return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
 			.then(resp => resp.json())
 			.then(json => {
-				const data = json.data.map(item => ({
+				
+				const data = json.data.map(item => {
+					let title = item.attributes.titles.en_jp ? item.attributes.titles.en_jp : item.attributes.titles[Object.keys(item.attributes.titles)[0]];
+					if (!title)
+						title = 'Missing Title';
+					return {
 					id: item.id,
-					title: item.attributes.titles.en_jp,
+					title,
 					startDate: item.attributes.startDate,
 					description: item.attributes.synopsis,
 					img: item.attributes.posterImage.tiny,
 					medium: item.attributes.subtype
-				}));
+				}
+				});
 				dispatch({
 					type: SET_SEARCH_ANIME,
 					payload: {animes: data}
