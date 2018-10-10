@@ -106,6 +106,7 @@ export const searchAnime = (query) => {
 					startDate: item.attributes.startDate,
 					description: item.attributes.synopsis,
 					img: item.attributes.posterImage.tiny,
+					averageRating: data.attributes.averageRating,
 					medium: item.attributes.subtype
 				}
 				});
