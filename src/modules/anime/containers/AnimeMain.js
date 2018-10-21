@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
 	Button,
 	View,
@@ -12,10 +12,10 @@ import AnimeList from '../components/AnimeList';
 import { pushHistory } from "../../config/actions";
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 
-import { deleteAnime, goToAnimeDetail, sortAnime } from '../actions';
+import { deleteAnime, goToAnimeDetail, setAnimeFlow, sortAnime } from '../actions';
 
 import TopBar from '../../shared/components/TopBar';
-import { ALPHABETICAL, RATING, RELEASE_DATE } from "../constants";
+import { ALPHABETICAL, RATING, RELEASE_DATE, WATCHED } from "../constants";
 
 import RNBottomActionSheet from 'react-native-bottom-action-sheet';
 
@@ -23,6 +23,7 @@ class AnimeMain extends Component {
 	constructor(props){
 		super(props);
 		this.handleSortButton = this.handleSortButton.bind(this);
+		this.handleWatchButton = this.handleWatchButton.bind(this);
 	}
 	
 	handleSortButton() {
@@ -37,13 +38,16 @@ class AnimeMain extends Component {
 			],
 			theme: "light",
 			selection: 3,
-			dividerItem: (<Text>poop</Text>),
 			onSelection: (index, value) => {
 				if (value === 'cancel')
 					return;
 				this.props.sortAnime(value);
 			}
 		});
+	}
+	
+	handleWatchButton() {
+		this.props.goToWatchedAnime();
 	}
 
 	render() {
@@ -52,12 +56,20 @@ class AnimeMain extends Component {
 			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar title="Anime Backlog"
 						right={
-							<TouchableHighlight>
-								<FontAwesome 
-									name="sort-amount-desc" color="#fffafa" size={32} 
-									onPress={this.handleSortButton}
-								/>
-							</TouchableHighlight>}
+							<View style={{flexDirection: 'row'}}>
+								<TouchableHighlight>
+									<FontAwesome
+										name="eye-slash" color="#fffafa" size={32}
+										onPress={this.handleWatchButton}
+									/>
+								</TouchableHighlight>
+								<TouchableHighlight>
+									<FontAwesome
+										name="sort-amount-desc" color="#fffafa" size={32}
+										onPress={this.handleSortButton}
+									/>
+								</TouchableHighlight>
+							</View>}
 				/>
 				<View style={{flex: 1, marginBottom: 32}}>
 					<AnimeList
@@ -95,17 +107,21 @@ const mapStateToProps = (state) => {
 	return {
 		animes: state.anime.animes,
 		listOrder: state.anime.listOrder,
+		watchedList: state.anime.watchedList,
 	}
 };
 
 const mapDispatchToProps = (dispatch) => ({
 	deleteAnime: (id) => {
-		dispatch(deleteAnime(id));
+		dispatch(setAnimeFlow(id, WATCHED));
 		//handle with saga later
 	},
 	goToAnimeDetail: (id) => dispatch(goToAnimeDetail(id)),
 	searchAnime: () => {
 		dispatch(pushHistory('/animesearch'));
+	},
+	goToWatchedAnime: () => {
+		dispatch(pushHistory('/watched'));
 	},
 	sortAnime: sortBy => dispatch(sortAnime(sortBy)),
 });

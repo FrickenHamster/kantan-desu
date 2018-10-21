@@ -5,6 +5,12 @@ const migrations = {
 			...state,
 			listOrder: Object.keys(state.animes)
 		}
+	},
+	1: state => {
+		return {
+			...state,
+			watchedList: [],
+		}
 	}
 };
 

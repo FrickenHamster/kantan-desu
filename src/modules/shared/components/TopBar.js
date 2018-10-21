@@ -38,12 +38,12 @@ class TopBar extends Component {
 						</TouchableHighlight>
 					}
 				</View>
-				<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+				<View style={{flex: 1, marginLeft: 10, justifyContent: 'center'}}>
 					<Text style={[styles.title, this.props.title.length > 18 ? styles.longTitle : null]} numberOfLines={1}>
 						{this.props.title}
 					</Text>
 				</View>
-				<View style={{alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', height: '100%', width: 40}}>
+				<View style={{alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
 					{
 						this.props.right
 					}
