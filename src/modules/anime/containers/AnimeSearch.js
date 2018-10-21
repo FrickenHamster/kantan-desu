@@ -19,6 +19,7 @@ import TopBar from '../../shared/components/TopBar';
 import Card from '../../shared/components/Card';
 
 import { addAnime, goToAnimeDetail, searchAnime } from '../actions';
+import { SEARCH } from "../constants";
 
 
 class AnimeSearch extends Component {
@@ -30,22 +31,16 @@ class AnimeSearch extends Component {
 		};
 
 		this.handleChangeText = this.handleChangeText.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this._search = this._search.bind(this);
 		this._addToBacklog = this._addToBacklog.bind(this);
 		this.renderItem = this.renderItem.bind(this);
 	}
 
 	componentDidMount() {
-		this._search();
 	}
 
 	handleChangeText(name, value) {
 		this.setState({title: value});
-	}
-
-	handleSubmit() {
-		console.log('submitting');
 	}
 
 	_search() {
@@ -58,15 +53,15 @@ class AnimeSearch extends Component {
 
 	renderItem({item}) {
 		return <Result
-			anime={item} img={item.img} name={item.title} id={item.id}
-			selected={this.props.backlog[item.id]}
+			anime={this.props.animes[item]}
+			selected={this.props.animes[item].flowState !== SEARCH}
 			click={this._addToBacklog}
 			detailAnime={this.props.detailAnime}
 		/>
 	}
 
 	keyExtractor(item) {
-		return item.id;
+		return 'search' + item;
 	};
 
 	render() {
@@ -97,8 +92,8 @@ class AnimeSearch extends Component {
 							/>
 							:
 							<FlatList
-								data={this.props.animeList}
-								extraData={this.props.backlog}
+								data={this.props.searchList}
+								extraData={this.props.animes}
 								renderItem={this.renderItem}
 								keyExtractor={this.keyExtractor}
 							/>
@@ -111,16 +106,16 @@ class AnimeSearch extends Component {
 	}
 }
 
-const Result = ({id, click, anime, name, img, selected, detailAnime}) => {
+const Result = ({click, anime, selected, detailAnime}) => {
 	return (
 		<View style={{width: '100%', padding: 5}}>
-			<TouchableHighlight onPress={() => click(anime)} onLongPress={() => detailAnime(id)}>
+			<TouchableHighlight onPress={() => click(anime)} onLongPress={() => detailAnime(anime.id)}>
 				<Card style={[styles.resultCard, (selected) ? styles.theChosenOnes : null]}>
 					<View style={styles.resCont}>
-						<View style={styles.pic}><Image source={{uri: img}} style={{height: 60, width: 60}}/></View>
+						<View style={styles.pic}><Image source={{uri: anime.img}} style={{height: 60, width: 60}}/></View>
 						<View style={{flex: 1}}>
 							<Text numberOfLines={2} style={{textAlign: 'center'}}>
-								{name}
+								{anime.title}
 							</Text>
 							<Text style={{ textAlign: 'center' }}>{moment(anime.startDate).format('YYYY')}</Text>
 						</View>
@@ -183,8 +178,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
 	return {
-		animeList: state.anime.searchAnimeList,
-		backlog: state.anime.animes,
+		animes: state.anime.animes,
+		searchList: state.anime.searchAnimeList,
 		busy: state.anime.searchBusy,
 	}
 };

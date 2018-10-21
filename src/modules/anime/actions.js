@@ -1,4 +1,13 @@
-import { ADD, DELETE, DETAIL, SET_DETAIL_ANIME, SET_SEARCH_ANIME, SET_SEARCH_BUSY, SORT_ANIME_LIST } from './constants';
+import {
+	ADD,
+	DELETE,
+	SEARCH,
+	SET_DETAIL_ANIME,
+	SET_FLOW,
+	SET_SEARCH_ANIME,
+	SET_SEARCH_BUSY,
+	SORT_ANIME_LIST
+} from './constants';
 import { pushHistory } from "../config/actions";
 
 export const addAnime = (theChosenOne) => {
@@ -14,12 +23,23 @@ export const deleteAnime = (id) => {
 	return {
 		type: DELETE,
 		payload: {
-			id: id
+			id
+		}
+	}
+};
+
+export const setAnimeFlow = (id, toState) => {
+	return {
+		type: SET_FLOW,
+		payload: {
+			id,
+			toState
 		}
 	}
 };
 
 export const goToAnimeDetail = id => {
+	//make this shit less retarded
 	return (dispatch, getState) => {
 		let anime;
 		const state = getState();
@@ -41,6 +61,7 @@ export const goToAnimeDetail = id => {
 			}
 		});
 
+		//factor out the update anime api later
 		dispatch(pushHistory(`/animedetail/${id}`));
 		return fetch(`https://kitsu.io/api/edge/anime/${id}`)
 			.then(resp => resp.json())
@@ -53,6 +74,7 @@ export const goToAnimeDetail = id => {
 					type: SET_DETAIL_ANIME,
 					payload: {
 						anime: {
+							...anime,
 							id: data.id,
 							title,
 							description: data.attributes.synopsis,
@@ -95,20 +117,24 @@ export const searchAnime = (query) => {
 		return fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
 			.then(resp => resp.json())
 			.then(json => {
-				
 				const data = json.data.map(item => {
 					let title = item.attributes.titles.en_jp ? item.attributes.titles.en_jp : item.attributes.titles[Object.keys(item.attributes.titles)[0]];
 					if (!title)
 						title = 'Missing Title';
 					return {
-					id: item.id,
-					title,
-					startDate: item.attributes.startDate,
-					description: item.attributes.synopsis,
-					img: item.attributes.posterImage.tiny,
-					averageRating: data.attributes.averageRating,
-					medium: item.attributes.subtype
-				}
+						id: item.id,
+						title,
+						description: item.attributes.synopsis,
+						img: item.attributes.posterImage.tiny,
+						largeImg: item.attributes.posterImage.large,
+						medium: item.attributes.subtype,
+						episodeCount: item.attributes.episodeCount,
+						startDate: item.attributes.startDate,
+						endDate: item.attributes.endDate,
+						averageRating: item.attributes.averageRating,
+						ageRating: item.attributes.ageRatingGuide,
+						flowState: SEARCH,
+					}
 				});
 				dispatch({
 					type: SET_SEARCH_ANIME,

@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import anime from './modules/anime/index';
 import config from './modules/config/index';
@@ -13,7 +12,6 @@ import thunk from 'redux-thunk';
 const middleware = routerMiddleware(history);
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import migrations from './modules/anime/migrations';
 
 const initialState = {
 	animes: [

@@ -15,45 +15,103 @@ import TopBar from '../../shared/components/TopBar';
 
 import Card from '../../shared/components/Card';
 import { Divider80 } from '../../shared/components/Dividers';
-import { addAnime, deleteAnime } from "../actions";
+import { addAnime, deleteAnime, setAnimeFlow } from "../actions";
+import { BACKLOG, DELETE_STANDBY, SEARCH, WATCHED } from "../constants";
 
 class AnimeDetail extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.renderButtons = this.renderButtons.bind(this);
 		this.handleAdd = this.handleAdd.bind(this);
 		this.handleRemove = this.handleRemove.bind(this);
+		this.handleWatch = this.handleWatch.bind(this);
+		this.handleBacklog = this.handleBacklog.bind(this);
 	}
-	
+
 	handleAdd() {
-		this.props.addAnime(this.props.anime);
+		this.props.setAnimeFlow(this.props.anime.id, BACKLOG);
 	}
-	
+
 	handleRemove() {
-		this.props.deleteAnime(this.props.anime.id);
+		if (this.props.searchList.includes(this.props.anime.id))
+			this.props.setAnimeFlow(this.props.anime.id, SEARCH);
+		else
+			this.props.setAnimeFlow(this.props.anime.id, DELETE_STANDBY);
+	}
+
+	handleWatch() {
+		this.props.setAnimeFlow(this.props.anime.id, WATCHED);
+	}
+
+	handleBacklog() {
+		this.props.setAnimeFlow(this.props.anime.id, BACKLOG);
 	}
 
 	renderButtons() {
-		if (this.props.inLog)
-			return (<View style={{width: '80%', marginTop: 8}}>
-				<Button
-					title={'Remove'}
-					onPress={this.handleRemove}
-					color='#0EC8EC'
-					containerViewStyle={{flex: 1}}
-				/>
-			</View>);
-		else {
-			return (<View style={{width: '80%', marginTop: 8}}>
-				<Button
-					title={'Add'}
-					onPress={this.handleAdd}
-					color='#0EC8EC'
-					style={{flex: 1}}
-				/>
-			</View>);
+		const buttons = [];
+		switch (this.props.anime.flowState) {
+			case BACKLOG:
+				buttons.push(
+					<View style={styles.buttonContainer} key={'watch'}>
+						<Button
+							title={'Mark As Watched'}
+							onPress={this.handleWatch}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				buttons.push(
+					<View style={styles.buttonContainer} key={'remove'}>
+						<Button
+							title={'Remove'}
+							onPress={this.handleRemove}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				break;
+			case WATCHED:
+				buttons.push(
+					<View style={styles.buttonContainer} key={'rewatch'}>
+						<Button
+							title={'Rewatch'}
+							onPress={this.handleBacklog}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				buttons.push(
+					<View style={styles.buttonContainer} key={'remove'}>
+						<Button
+							title={'Remove'}
+							onPress={this.handleRemove}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				break;
+			case SEARCH:
+				buttons.push(
+					<View style={styles.buttonContainer} key={'add'}>
+						<Button
+							title={'Add'}
+							onPress={this.handleAdd}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				break;
 		}
+
+		return (<View style={{width: '80%', marginTop: 8}}>
+			{buttons}
+		</View>);
 	}
 
 	render() {
@@ -125,7 +183,7 @@ const StatText = ({label, value}) => {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#fafafa',
-		flex: 1, 
+		flex: 1,
 	},
 	titleText: {
 		fontSize: 26,
@@ -162,8 +220,8 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	statContainer: {
-		flexDirection: 'row', 
-		justifyContent: 'flex-end', 
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
 		marginBottom: 5
 	},
 	statLabelText: {
@@ -175,19 +233,23 @@ const styles = StyleSheet.create({
 		flex: 1,
 		fontSize: 22,
 		textAlign: 'right'
+	},
+	buttonContainer: {
+		paddingVertical: 5,
 	}
 });
 
 const mapStateToProps = (state, props) => {
 	return {
-		inLog: state.anime.animes[state.anime.detailAnime.id] !== undefined,
-		anime: state.anime.detailAnime
+		anime: state.anime.animes[props.match.params.id],
+		searchList: state.anime.searchAnimeList,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	addAnime: (anime) => dispatch(addAnime(anime)),
-	deleteAnime: (id) => dispatch(deleteAnime(id)),
+	addAnime: anime => dispatch(addAnime(anime)),
+	deleteAnime: id => dispatch(deleteAnime(id)),
+	setAnimeFlow: (id, flow) => dispatch(setAnimeFlow(id, flow)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnimeDetail);
