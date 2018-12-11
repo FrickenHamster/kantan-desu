@@ -107,6 +107,18 @@ class AnimeDetail extends Component {
 						/>
 					</View>);
 				break;
+			default:
+				buttons.push(
+					<View style={styles.buttonContainer} key={'add'}>
+						<Button
+							title={'Add'}
+							onPress={this.handleAdd}
+							color='#0EC8EC'
+							containerViewStyle={{flex: 1}}
+							style={styles.button}
+						/>
+					</View>);
+				break;
 		}
 
 		return (<View style={{width: '80%', marginTop: 8}}>
@@ -118,7 +130,7 @@ class AnimeDetail extends Component {
 		if (!this.props.anime) {
 			return (<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 					<View>
-						<TopBar title='Loading' allowBack/>
+						<TopBar title='Loading' back/>
 					</View>
 				</View>
 			)
@@ -138,7 +150,7 @@ class AnimeDetail extends Component {
 		return (
 			<View style={styles.container}>
 				<View>
-					<TopBar title={this.props.anime.title} allowBack/>
+					<TopBar title={this.props.anime.title} back/>
 				</View>
 				<ScrollView>
 					<View style={{alignItems: 'center', marginBottom: 200}}>

@@ -59,17 +59,12 @@ class AnimeMain extends Component {
 							<View style={{flexDirection: 'row'}}>
 								<TouchableHighlight>
 									<FontAwesome
-										name="eye-slash" color="#fffafa" size={32}
-										onPress={this.handleWatchButton}
-									/>
-								</TouchableHighlight>
-								<TouchableHighlight>
-									<FontAwesome
 										name="sort-amount-desc" color="#fffafa" size={32}
 										onPress={this.handleSortButton}
 									/>
 								</TouchableHighlight>
 							</View>}
+						menu
 				/>
 				<View style={{flex: 1, marginBottom: 32}}>
 					<AnimeList
@@ -86,13 +81,6 @@ class AnimeMain extends Component {
 						height: 32,
 						width: '100%',
 					}}>
-					<Button
-						title='Anime Search'
-						onPress={this.props.searchAnime}
-						color='#0EC8EC'
-						style={{flex: 1}}
-					/>
-
 				</View>
 			</View>
 		)
@@ -117,9 +105,6 @@ const mapDispatchToProps = (dispatch) => ({
 		//handle with saga later
 	},
 	goToAnimeDetail: (id) => dispatch(goToAnimeDetail(id)),
-	searchAnime: () => {
-		dispatch(pushHistory('/animesearch'));
-	},
 	goToWatchedAnime: () => {
 		dispatch(pushHistory('/watched'));
 	},

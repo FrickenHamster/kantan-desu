@@ -94,7 +94,7 @@ class AnimeWatched extends Component {
 			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
 				<TopBar 
 					title="Watched Animes"
-					allowBack
+					menu
 				/>
 				<View style={{flex: 1, marginBottom: 32}}>
 					<FlatList

@@ -1,5 +1,5 @@
 import { getHistory } from '../../../config/history';
-import { SAVE_HISTORY } from "./constants";
+import { SAVE_HISTORY, SHOW_SIDE_MENU } from "./constants";
 
 export const pushHistory = (path) => {
 	return dispatch => {
@@ -27,6 +27,13 @@ export const popHistory = () => {
 			}
 		})
 	}
-}
-;
+};
 
+export const setShowSideMenu = (show) => {
+	return {
+		type: SHOW_SIDE_MENU,
+		payload: {
+			show
+		}
+	}
+};

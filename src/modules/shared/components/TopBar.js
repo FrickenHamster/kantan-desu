@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import Feather from 'react-native-vector-icons/dist/Feather';
 
-import { popHistory } from "../../config/actions";
+import { popHistory, setShowSideMenu } from "../../config/actions";
 import { connect } from "react-redux";
 
 class TopBar extends Component {
@@ -17,6 +17,7 @@ class TopBar extends Component {
 		super(props);
 
 		this.handleBack = this.handleBack.bind(this);
+		this.handleMenu = this.handleMenu.bind(this);
 	}
 
 	static contextTypes = {
@@ -26,17 +27,31 @@ class TopBar extends Component {
 	handleBack(){
 		this.props.goBack();
 	}
+	
+	handleMenu() {
+		this.props.setShowSideMenu(!this.props.showSideMenu);
+	}
 
 	render() {
+		
+		const leftIcons = [];
+		if (this.props.menu) {
+			leftIcons.push(<TouchableHighlight key='menu'>
+				<Feather name="menu" color="#fffafa" size={32} onPress={this.handleMenu}/>
+			</TouchableHighlight>);
+		}
+		if (this.props.back) {
+			leftIcons.push(<TouchableHighlight key='back'>
+				<Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleBack}/>
+			</TouchableHighlight>)
+		}
+		const leftWidth = leftIcons.length * 40;
+
 		return (
 			<View style={styles.container}>
-				<View style={{alignSelf: 'flex-start', justifyContent: 'center', alignItems: 'center', height: '100%', width: 40}}>
-					{
-						this.props.allowBack &&
-						<TouchableHighlight>
-							<Feather name="chevron-left" color="#fffafa" size={32} onPress={this.handleBack}/>
-						</TouchableHighlight>
-					}
+				
+				<View style={[{width: leftWidth}]}>
+					{leftIcons}
 				</View>
 				<View style={{flex: 1, marginLeft: 10, justifyContent: 'center'}}>
 					<Text style={[styles.title, this.props.title.length > 18 ? styles.longTitle : null]} numberOfLines={1}>
@@ -73,12 +88,16 @@ const styles = StyleSheet.create({
 	},
 	longTitle: {
 		fontSize: 16,
-	}
+	},
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	goBack: () => dispatch(popHistory())
+
+const mapDispatchToProps = dispatch => ({
+	goBack: () => dispatch(popHistory()),
+	setShowSideMenu: (show) => {
+		dispatch(setShowSideMenu(show));
+	},
 });
 
-export default connect(null, mapDispatchToProps)(TopBar);
+export default connect(state => ({showSideMenu: state.config.showSideMenu}) , mapDispatchToProps)(TopBar);
 

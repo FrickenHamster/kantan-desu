@@ -18,7 +18,7 @@ export default class App extends React.Component {
 		this.history = history;
 		this.state = {
 			history: null
-		}
+		};
 		this.beforeLift = this.beforeLift.bind(this);
 	}
 	

@@ -67,7 +67,9 @@ class AnimeSearch extends Component {
 	render() {
 		return (
 			<View style={{flex: 1, backgroundColor: '#fafafa'}}>
-				<TopBar title="Anime Search" allowBack/>
+				<TopBar title="Anime Search"
+					menu
+				/>
 				<View style={styles.formContainer}>
 					<Card style={styles.customSearch}>
 						<View style={styles.searchCont}>

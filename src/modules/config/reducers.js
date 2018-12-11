@@ -1,11 +1,12 @@
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { SAVE_HISTORY } from "./constants";
+import { SAVE_HISTORY, SHOW_SIDE_MENU } from "./constants";
 
 const initialState = {
 	history: {
 		entries: [],
 		index: 0,
+		showSideMenu: false,
 	}
 };
 
@@ -19,6 +20,12 @@ const reducer = (state = initialState, action) => {
 					index: action.payload.index,
 				}
 			};
+			
+		case SHOW_SIDE_MENU:
+			return {
+				...state,
+				showSideMenu: action.payload.show
+			};
 
 		default:
 			return state;
@@ -28,5 +35,6 @@ const reducer = (state = initialState, action) => {
 export default persistReducer({
 		key: 'config',
 		storage: storage,
+		blacklist: ['showSideMenu']
 	},
 	reducer);

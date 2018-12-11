@@ -4,7 +4,6 @@ import createHistory from 'history/createMemoryHistory';
 
 let history = createHistory();
 history.ii = Math.random();
-console.log('making new history');
 
 export function createNew(props) {
 	history = createHistory(props);
